@@ -1,5 +1,9 @@
 package com.riu.challenge.hotel_availability_search.infrastructure.entrypoint.restcontroller.dto;
 
-public class SearchCountResponseDTO {
+import com.riu.challenge.hotel_availability_search.domain.model.SearchId;
 
+public record SearchCountResponseDTO (
+    String searchId,
+    SearchRequestDTO search,
+    String count){
 }
