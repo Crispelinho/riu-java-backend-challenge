@@ -14,5 +14,5 @@ import org.springframework.context.annotation.FilterType;
     })
 }, useDefaultFilters = false)
 public class UseCasesConfig {
-  
+
 }
