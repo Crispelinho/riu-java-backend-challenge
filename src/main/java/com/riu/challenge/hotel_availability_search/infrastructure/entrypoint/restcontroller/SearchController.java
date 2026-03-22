@@ -44,16 +44,16 @@ public class SearchController {
     final LocalDate checkOut = LocalDate.parse(request.checkOut(), formatter);
     final List<Integer> ages = Arrays.asList(request.ages());
 
+    final SearchId searchId = SearchId.generate();
     final CreateSearchCommand command = new CreateSearchCommand(
         request.hotelId(),
         checkIn,
         checkOut,
         ages);
-
-    final SearchId searchId = createSearchUseCase.execute(command).getSearchId();
+    createSearchUseCase.execute(command);
     return ResponseEntity.ok()
         .contentType(MediaType.APPLICATION_JSON)
-        .body(new SearchIdResponseDTO(searchId.getValue()));
+        .body(new SearchIdResponseDTO(searchId.value()));
   }
 
   @GetMapping("count/{searchId}")
@@ -62,22 +62,22 @@ public class SearchController {
     final GetSearchCommand getSearchCommand = new GetSearchCommand(searchId1);
     final Search search = getSearchUseCase.execute(getSearchCommand.searchId());
     final GetSearchCountCommand getSearchCountCommand = new GetSearchCountCommand(
-        search.getHotelId(),
-        search.getCheckIn(),
-        search.getCheckOut(),
-        search.getAges());
+        search.hotelId(),
+        search.checkIn(),
+        search.checkOut(),
+        search.ages());
 
     final long count = getSearchCountUseCase.execute(getSearchCountCommand);
+    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     return ResponseEntity.ok()
         .contentType(MediaType.APPLICATION_JSON)
         .body(new SearchCountResponseDTO(
             searchId,
             new SearchResponsetDTO(
-                search.getHotelId(),
-                search.getCheckIn().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                search.getCheckOut().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                search.getAges().stream().mapToInt(Integer::intValue).toArray()
-            ),
+                search.hotelId(),
+                search.checkIn().format(formatter),
+                search.checkOut().format(formatter),
+                search.ages().stream().mapToInt(Integer::intValue).toArray()),
             count));
   }
 }

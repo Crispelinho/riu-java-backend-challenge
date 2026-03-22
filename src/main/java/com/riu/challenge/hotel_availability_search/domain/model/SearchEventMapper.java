@@ -10,10 +10,9 @@ public interface SearchEventMapper {
 
   SearchEventMapper INSTANCE = Mappers.getMapper(SearchEventMapper.class);
 
-  @Mapping(target = "searchId", source = "searchId.value")
+  @Mapping(target = "searchId", expression = "java(search.searchId().value())")
   CreateSearchEvent toCreateSearchEvent(Search search);
 
-  @Mapping(target = "searchId",
-      expression = "java(new com.riu.challenge.hotel_availability_search.domain.model.SearchId(event.getSearchId()))")
+  @Mapping(target = "searchId", expression = "java(new com.riu.challenge.hotel_availability_search.domain.model.SearchId(event.getSearchId()))")
   Search toSearch(CreateSearchEvent event);
 }

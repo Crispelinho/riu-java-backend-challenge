@@ -14,20 +14,10 @@ class SearchTest {
         LocalDate checkOut = checkIn.plusDays(2);
         List<Integer> ages = List.of(30, 25);
         Search search = new Search(id, hotelId, checkIn, checkOut, ages);
-        assertEquals(id, search.getSearchId());
-        assertEquals(hotelId, search.getHotelId());
-        assertEquals(checkIn, search.getCheckIn());
-        assertEquals(checkOut, search.getCheckOut());
-        assertEquals(ages, search.getAges());
-    }
-
-    @Test
-    void noArgsConstructorWorks() {
-        Search search = new Search();
-        assertNull(search.getSearchId());
-        assertNull(search.getHotelId());
-        assertNull(search.getCheckIn());
-        assertNull(search.getCheckOut());
-        assertNull(search.getAges());
+        assertEquals(id, search.searchId());
+        assertEquals(hotelId, search.hotelId());
+        assertEquals(checkIn, search.checkIn());
+        assertEquals(checkOut, search.checkOut());
+        assertEquals(ages, search.ages());
     }
 }

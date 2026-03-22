@@ -16,13 +16,13 @@ class SearchIdTest {
     void constructorAcceptsValidValue() {
         String value = UUID.randomUUID().toString();
         SearchId id = new SearchId(value);
-        assertEquals(value, id.getValue());
+        assertEquals(value, id.value());
     }
 
     @Test
     void generateReturnsValidSearchId() {
         SearchId id = SearchId.generate();
-        assertNotNull(id.getValue());
-        assertFalse(id.getValue().isBlank());
+        assertNotNull(id.value());
+        assertFalse(id.value().isBlank());
     }
 }

@@ -22,9 +22,9 @@ public class SearchRepositoryAdapter implements SearchRepositoryPort {
 
   @Override
   public Search findById(final SearchId searchId) {
-    final SearchEntity searchEntity = searchRepository.findBySearchId(searchId.getValue());
+    final SearchEntity searchEntity = searchRepository.findBySearchId(searchId.value());
     if (searchEntity == null) {
-      throw new SearchNotFoundException("No se encontró la búsqueda con id: " + searchId.getValue());
+      throw new SearchNotFoundException("No se encontró la búsqueda con id: " + searchId.value());
     }
     return mapToSearch(searchEntity);
   }
@@ -57,13 +57,14 @@ public class SearchRepositoryAdapter implements SearchRepositoryPort {
     return true;
   }
 
+
   private SearchEntity mapToSearchEntity(final Search search) {
-    final SearchEntity searchEntity = new SearchEntity();
-    searchEntity.setSearchId(search.getSearchId().getValue());
-    searchEntity.setHotelId(search.getHotelId());
-    searchEntity.setCheckInDate(search.getCheckIn());
-    searchEntity.setCheckOutDate(search.getCheckOut());
-    searchEntity.setAges(search.getAges());
+    SearchEntity searchEntity = new SearchEntity();
+    searchEntity.setSearchId(search.searchId().value());
+    searchEntity.setHotelId(search.hotelId());
+    searchEntity.setCheckInDate(search.checkIn());
+    searchEntity.setCheckOutDate(search.checkOut());
+    searchEntity.setAges(search.ages());
     return searchEntity;
   }
 
@@ -71,9 +72,8 @@ public class SearchRepositoryAdapter implements SearchRepositoryPort {
     if (searchEntity == null) {
       throw new SearchNotFoundException("Entidad de búsqueda no encontrada");
     }
-    final SearchId searchId = new SearchId(searchEntity.getSearchId());
     return new Search(
-        searchId,
+        new SearchId(searchEntity.getSearchId()),
         searchEntity.getHotelId(),
         searchEntity.getCheckInDate(),
         searchEntity.getCheckOutDate(),

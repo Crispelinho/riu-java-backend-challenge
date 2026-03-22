@@ -3,14 +3,13 @@ package com.riu.challenge.hotel_availability_search.application.usecases;
 import com.riu.challenge.hotel_availability_search.application.commands.CreateSearchCommand;
 import com.riu.challenge.hotel_availability_search.domain.model.Search;
 import com.riu.challenge.hotel_availability_search.domain.model.SearchId;
-import com.riu.challenge.hotel_availability_search.domain.ports.SearchRepositoryPort;
 import com.riu.challenge.hotel_availability_search.application.ports.NotificationServicePort;
-import lombok.RequiredArgsConstructor;
-
-@AllArgsConstructor
 public class CreateSearchUseCase {
-
   private final NotificationServicePort notificationServicePort;
+
+  public CreateSearchUseCase(NotificationServicePort notificationServicePort) {
+    this.notificationServicePort = notificationServicePort;
+  }
 
   public void execute(final CreateSearchCommand createSearchCommand) {
     Search search = mapToSearch(createSearchCommand);

@@ -31,16 +31,16 @@ class SearchRepositoryAdapterTest {
             List.of(25, 30)
         );
         SearchEntity entity = new SearchEntity();
-        entity.setSearchId(search.getSearchId().getValue());
-        entity.setHotelId(search.getHotelId());
-        entity.setCheckInDate(search.getCheckIn());
-        entity.setCheckOutDate(search.getCheckOut());
-        entity.setAges(search.getAges());
+        entity.setSearchId(search.searchId().value());
+        entity.setHotelId(search.hotelId());
+        entity.setCheckInDate(search.checkIn());
+        entity.setCheckOutDate(search.checkOut());
+        entity.setAges(search.ages());
         when(searchRepository.save(any())).thenReturn(entity);
         when(searchRepository.findBySearchId(any())).thenReturn(entity);
         Search result = adapter.save(search);
         assertNotNull(result);
-        assertEquals(search.getSearchId().getValue(), result.getSearchId().getValue());
+        assertEquals(search.searchId().value(), result.searchId().value());
     }
 
     @Test
