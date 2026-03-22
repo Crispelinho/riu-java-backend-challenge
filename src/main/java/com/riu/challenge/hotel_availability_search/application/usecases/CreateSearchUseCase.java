@@ -4,19 +4,20 @@ import com.riu.challenge.hotel_availability_search.application.commands.CreateSe
 import com.riu.challenge.hotel_availability_search.domain.model.Search;
 import com.riu.challenge.hotel_availability_search.domain.model.SearchId;
 import com.riu.challenge.hotel_availability_search.domain.ports.SearchRepositoryPort;
-import lombok.AllArgsConstructor;
+import com.riu.challenge.hotel_availability_search.application.ports.NotificationServicePort;
+import lombok.RequiredArgsConstructor;
 
 @AllArgsConstructor
 public class CreateSearchUseCase {
 
-  private final SearchRepositoryPort searchRepositoryAdapter;
+  private final NotificationServicePort notificationServicePort;
 
-  public Search execute(final CreateSearchCommand createSearchCommand) {
-    return searchRepositoryAdapter.save(mapToSearch(createSearchCommand));
+  public void execute(final CreateSearchCommand createSearchCommand) {
+    Search search = mapToSearch(createSearchCommand);
+    notificationServicePort.publishSearchCreatedEvent(search);
   }
 
   private Search mapToSearch(final CreateSearchCommand createSearchCommand) {
-    System.out.println("Mapping CreateSearchCommand to Search"+ SearchId.generate());
     return new Search(
         SearchId.generate(),
         createSearchCommand.hotelId(),

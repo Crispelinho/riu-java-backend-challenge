@@ -7,3 +7,6 @@ spring:
   h2:
     console:
       enabled: true
+app:
+  kafka:
+    topic: hotel_availability_searches
