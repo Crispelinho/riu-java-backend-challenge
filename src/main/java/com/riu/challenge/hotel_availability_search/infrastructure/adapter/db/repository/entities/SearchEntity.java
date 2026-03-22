@@ -1,9 +1,9 @@
 package com.riu.challenge.hotel_availability_search.infrastructure.adapter.db.repository.entities;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,8 +23,10 @@ public class SearchEntity {
     
     private String searchId;
     private String hotelId;
-    private LocalDate checkIn;
-    private LocalDate checkOut;
+    @Column(name = "check_in_date")
+    private LocalDate checkInDate;
+    @Column(name = "check_out_date")
+    private LocalDate checkOutDate;
 
     @ElementCollection
     private List<Integer> ages;

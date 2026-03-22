@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SearchRepository extends JpaRepository<SearchEntity, Long> {
 
-  long countByHotelIdAndCheckInAndCheckOutAndAges(String hotelId, LocalDate checkIn, LocalDate checkOut, List<Integer> ages);
+  List<SearchEntity> findByHotelIdAndCheckInDateAndCheckOutDate(String hotelId, LocalDate checkIn, LocalDate checkOut);
   SearchEntity findBySearchId(String searchId);
 }
