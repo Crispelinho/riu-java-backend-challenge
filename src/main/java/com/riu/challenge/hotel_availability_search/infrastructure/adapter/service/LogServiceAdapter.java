@@ -16,9 +16,21 @@ public class LogServiceAdapter implements LogServicePort {
         log.debug(message);
     }
 
+    public void logDebug(String component, String message) {
+        if (log.isDebugEnabled()) {
+            log.debug(formatMessage(component, message));
+        }
+    }
+
     @Override
     public void logInfo(String message) {
         log.info(message);
+    }
+
+    public void logInfo(String component, String message) {
+        if (log.isInfoEnabled()) {
+            log.info(formatMessage(component, message));
+        }
     }
 
     @Override
@@ -26,14 +38,37 @@ public class LogServiceAdapter implements LogServicePort {
         log.warn(message);
     }
 
+    public void logWarn(String component, String message) {
+        if (log.isWarnEnabled()) {
+            log.warn(formatMessage(component, message));
+        }
+    }
+
     @Override
     public void logError(String message) {
         log.error(message);
+    }
+
+    public void logError(String component, String message) {
+        if (log.isErrorEnabled()) {
+            log.error(formatMessage(component, message));
+        }
     }
 
     @Override
     public void logError(String message, Throwable throwable) throws LogServiceException {
         log.error(message, throwable);
         throw new LogServiceException(message, throwable);
+    }
+
+    public void logError(String component, String message, Throwable throwable) throws LogServiceException {
+        if (log.isErrorEnabled()) {
+            log.error(formatMessage(component, message), throwable);
+        }
+        throw new LogServiceException(formatMessage(component, message), throwable);
+    }
+
+    private String formatMessage(String component, String message) {
+        return "[" + component + "] " + message;
     }
 }

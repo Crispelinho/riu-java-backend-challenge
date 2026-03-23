@@ -2,7 +2,7 @@ spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:oracle:thin:@oracle-db:1521/XE}
     driver-class-name: ${SPRING_DATASOURCE_DRIVER:oracle.jdbc.OracleDriver}
-    username: ${SPRING_DATASOURCE_USERNAME:appuser}
+    username: ${SPRING_DATASOURCE_USERNAME:system}
     password: ${SPRING_DATASOURCE_PASSWORD:apppassword}
   h2:
     console:
@@ -21,7 +21,7 @@ spring:
 
 app:
   kafka:
-    topic: hotel_availability_searches
+    topic: ${APP_KAFKA_TOPIC:hotel_availability_searches}
 
 # Logging configuration
 logging:

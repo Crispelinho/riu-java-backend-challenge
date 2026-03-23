@@ -23,7 +23,7 @@ public class SearchEventProducerAdapter {
   }
 
   public void publishSearchEvent(final CreateSearchEvent event) {
-    logService.logInfo("Producing event to topic '" + topic + "': " + event);
+    logService.logInfo("SearchEventProducerAdapter", "Producing event to topic '" + topic + "': " + event);
     kafkaTemplate.send(topic, event.getSearchId(), event);
   }
 }

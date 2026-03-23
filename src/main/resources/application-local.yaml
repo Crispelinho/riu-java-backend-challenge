@@ -11,7 +11,7 @@ spring:
     console:
       enabled: false
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
@@ -24,7 +24,7 @@ spring:
 
 app:
   kafka:
-    topic: hotel_availability_searches
+    topic: ${APP_KAFKA_TOPIC:hotel_availability_searches}
 
 logging:
   level:

@@ -23,7 +23,7 @@ public class SearchEventConsumerAdapter {
   @KafkaListener(topics = "hotel_availability_searches", groupId = "search-consumer-group")
   public void consume(final ConsumerRecord<String, CreateSearchEvent> kafkaRecord) {
     final CreateSearchEvent event = kafkaRecord.value();
-    logService.logInfo("Consumed event from topic '" + kafkaRecord.topic() + "': " + event);
+    logService.logInfo("SearchEventConsumerAdapter", "Consumed event from topic '" + kafkaRecord.topic() + "': " + event);
     final Search search = SearchEventMapper.INSTANCE.toSearch(event);
     Thread.startVirtualThread(() -> searchRepositoryPort.save(search));
   }

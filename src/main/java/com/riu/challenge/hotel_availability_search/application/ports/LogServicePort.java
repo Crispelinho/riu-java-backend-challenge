@@ -7,8 +7,13 @@ import com.riu.challenge.hotel_availability_search.domain.exceptions.LogServiceE
 
 public interface LogServicePort {
 	void logDebug(String message);
+	void logDebug(String component, String message);
 	void logInfo(String message);
+	void logInfo(String component, String message);
 	void logWarn(String message);
+	void logWarn(String component, String message);
 	void logError(String message);
+	void logError(String component, String message);
 	void logError(String message, Throwable throwable) throws LogServiceException;
+	void logError(String component, String message, Throwable throwable) throws LogServiceException;
 }
