@@ -15,6 +15,7 @@ class SearchControllerTest {
     @Test
     void searchReturnsResponseWithId() {
         CreateSearchUseCase useCase = mock(CreateSearchUseCase.class);
+        when(useCase.execute(any())).thenReturn(new com.riu.challenge.hotel_availability_search.domain.model.SearchId("test-id"));
         SearchController controller = new SearchController(useCase, null, null);
         SearchRequestDTO dto = new SearchRequestDTO("H1", "01/01/2026", "02/01/2026", new Integer[]{1,2});
         ResponseEntity<?> response = controller.search(dto);

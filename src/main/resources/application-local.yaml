@@ -1,14 +1,17 @@
 spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:oracle:thin:@oracle-db:1521/XE}
-    driver-class-name: ${SPRING_DATASOURCE_DRIVER:oracle.jdbc.OracleDriver}
-    username: ${SPRING_DATASOURCE_USERNAME:appuser}
-    password: ${SPRING_DATASOURCE_PASSWORD:apppassword}
+    url: jdbc:oracle:thin:@localhost:1521/XE
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: system
+    password: apppassword
   h2:
     console:
-      enabled: ${SPRING_H2_CONSOLE_ENABLED:false}
+      enabled: false
   kafka:
-    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
+    bootstrap-servers: localhost:9092
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
@@ -23,7 +26,6 @@ app:
   kafka:
     topic: hotel_availability_searches
 
-# Logging configuration
 logging:
   level:
     root: INFO
@@ -38,16 +40,15 @@ logging:
 
 ---
 # Perfil de test para H2
----
 spring:
   config:
     activate:
       on-profile: test
   datasource:
     url: jdbc:h2:mem:testdb
-    driver-class-name: ${SPRING_DATASOURCE_DRIVER:org.h2.Driver}
+    driver-class-name: org.h2.Driver
     username: sa
     password:
   h2:
     console:
-      enabled: ${SPRING_H2_CONSOLE_ENABLED:true}
+      enabled: true

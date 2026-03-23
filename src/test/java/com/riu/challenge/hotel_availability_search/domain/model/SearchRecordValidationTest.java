@@ -2,6 +2,7 @@ package com.riu.challenge.hotel_availability_search.domain.model;
 
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,6 +43,6 @@ class SearchRecordValidationTest {
         assertThrows(IllegalArgumentException.class, () -> new Search(id, "H1", checkIn, checkOut, List.of()));
         assertThrows(IllegalArgumentException.class, () -> new Search(id, "H1", checkIn, checkOut, List.of(0)));
         assertThrows(IllegalArgumentException.class, () -> new Search(id, "H1", checkIn, checkOut, List.of(-1)));
-        assertThrows(IllegalArgumentException.class, () -> new Search(id, "H1", checkIn, checkOut, List.of((Integer) null)));
+        assertThrows(IllegalArgumentException.class, () -> new Search(id, "H1", checkIn, checkOut, Arrays.asList((Integer) null)));
     }
 }

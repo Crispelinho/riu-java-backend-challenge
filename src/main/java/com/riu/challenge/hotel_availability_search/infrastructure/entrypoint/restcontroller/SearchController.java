@@ -37,24 +37,23 @@ public class SearchController {
 
   private final GetSearchUseCase getSearchUseCase;
 
-  @PostMapping("/search")
-  public ResponseEntity<SearchIdResponseDTO> search(@Valid @RequestBody final SearchRequestDTO request) {
-    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    final LocalDate checkIn = LocalDate.parse(request.checkIn(), formatter);
-    final LocalDate checkOut = LocalDate.parse(request.checkOut(), formatter);
-    final List<Integer> ages = Arrays.asList(request.ages());
+    @PostMapping("/search")
+    public ResponseEntity<SearchIdResponseDTO> search(@Valid @RequestBody final SearchRequestDTO request) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        final LocalDate checkIn = LocalDate.parse(request.checkIn(), formatter);
+        final LocalDate checkOut = LocalDate.parse(request.checkOut(), formatter);
+        final List<Integer> ages = Arrays.asList(request.ages());
 
-    final SearchId searchId = SearchId.generate();
-    final CreateSearchCommand command = new CreateSearchCommand(
-        request.hotelId(),
-        checkIn,
-        checkOut,
-        ages);
-    createSearchUseCase.execute(command);
-    return ResponseEntity.ok()
-        .contentType(MediaType.APPLICATION_JSON)
-        .body(new SearchIdResponseDTO(searchId.value()));
-  }
+        final CreateSearchCommand command = new CreateSearchCommand(
+                request.hotelId(),
+                checkIn,
+                checkOut,
+                ages);
+        SearchId searchId = createSearchUseCase.execute(command);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new SearchIdResponseDTO(searchId.value()));
+    }
 
   @GetMapping("count/{searchId}")
   public ResponseEntity<SearchCountResponseDTO> countSearches(@PathVariable String searchId) {

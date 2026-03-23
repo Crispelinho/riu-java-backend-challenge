@@ -11,9 +11,10 @@ public class CreateSearchUseCase {
     this.notificationServicePort = notificationServicePort;
   }
 
-  public void execute(final CreateSearchCommand createSearchCommand) {
+  public SearchId execute(final CreateSearchCommand createSearchCommand) {
     Search search = mapToSearch(createSearchCommand);
     notificationServicePort.publishSearchCreatedEvent(search);
+    return search.searchId();
   }
 
   private Search mapToSearch(final CreateSearchCommand createSearchCommand) {

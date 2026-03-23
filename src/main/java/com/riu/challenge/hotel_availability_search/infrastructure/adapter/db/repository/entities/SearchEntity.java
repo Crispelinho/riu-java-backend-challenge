@@ -3,12 +3,14 @@ package com.riu.challenge.hotel_availability_search.infrastructure.adapter.db.re
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -29,6 +31,10 @@ public class SearchEntity {
     private LocalDate checkOutDate;
 
     @ElementCollection
+    @CollectionTable(
+        name = "search_entity_ages",
+        joinColumns = @JoinColumn(name = "search_entity_id", referencedColumnName = "id")
+    )
     private List<Integer> ages;
 
 }
