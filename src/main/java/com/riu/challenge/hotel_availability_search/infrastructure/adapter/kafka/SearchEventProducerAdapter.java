@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
-import com.riu.challenge.hotel_availability_search.domain.exceptions.LogServiceException;
-
 @Component
 public class SearchEventProducerAdapter {
 

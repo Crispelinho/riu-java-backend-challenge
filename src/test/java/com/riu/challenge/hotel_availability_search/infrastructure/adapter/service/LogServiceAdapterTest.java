@@ -1,7 +1,7 @@
 package com.riu.challenge.hotel_availability_search.infrastructure.adapter.service;
 
 import com.riu.challenge.hotel_availability_search.application.ports.LogServicePort;
-import com.riu.challenge.hotel_availability_search.domain.exceptions.LogServiceException;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +30,7 @@ class LogServiceAdapterTest {
     }
 
     @Test
-    void logErrorWithThrowableThrowsLogServiceExceptionAndEncapsulatesCause() {
+    void logErrorWithThrowableDoesNotThrow() {
         Exception original = new IllegalArgumentException("original");
         // No exception is thrown, just ensure no error occurs
         assertDoesNotThrow(() -> logService.logError("error with cause", original));
