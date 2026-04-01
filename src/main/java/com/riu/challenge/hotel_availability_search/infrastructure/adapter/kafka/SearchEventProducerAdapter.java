@@ -1,16 +1,23 @@
 package com.riu.challenge.hotel_availability_search.infrastructure.adapter.kafka;
 
 import com.riu.challenge.hotel_availability_search.infrastructure.adapter.kafka.event.CreateSearchEvent;
-
 import com.riu.challenge.hotel_availability_search.application.ports.LogServicePort;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.CompletableFuture;
+
+import com.riu.challenge.hotel_availability_search.domain.exceptions.LogServiceException;
 
 @Component
 public class SearchEventProducerAdapter {
+
   private final KafkaTemplate<String, CreateSearchEvent> kafkaTemplate;
+
   private final String topic;
+
   private final LogServicePort logService;
 
   public SearchEventProducerAdapter(
@@ -23,11 +30,21 @@ public class SearchEventProducerAdapter {
   }
 
   public void publishSearchEvent(final CreateSearchEvent event) {
-    logService.logInfo("SearchEventProducerAdapter", "Producing event to topic '" + topic + "': " + event);
-    kafkaTemplate.send(topic, event.getSearchId(), event)
-      .addCallback(
-        result -> logService.logInfo("SearchEventProducerAdapter", "Successfully published event to topic '" + topic + "': " + event),
-        ex -> logService.logError("SearchEventProducerAdapter", "Failed to publish event to topic '" + topic + "': " + event + ". Error: " + ex.getMessage())
-      );
+
+    logService.logInfo("SearchEventProducerAdapter",
+        "Producing event to topic '" + topic + "': " + event);
+
+    final CompletableFuture<SendResult<String, CreateSearchEvent>> future =
+        kafkaTemplate.send(topic, event.getSearchId(), event);
+
+    future.whenComplete((result, ex) -> {
+      if (ex != null) {
+        logService.logError("SearchEventProducerAdapter",
+            "Error al publicar mensaje en Kafka", ex);
+      } else {
+        logService.logInfo("SearchEventProducerAdapter",
+            "Mensaje publicado correctamente en Kafka: " + result);
+      }
+    });
   }
 }

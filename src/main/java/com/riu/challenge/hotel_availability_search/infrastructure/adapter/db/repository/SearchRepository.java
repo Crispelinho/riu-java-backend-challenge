@@ -1,7 +1,7 @@
+package com.riu.challenge.hotel_availability_search.infrastructure.adapter.db.repository;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import com.riu.challenge.hotel_availability_search.infrastructure.adapter.db.repository.QueryConstants;
-package com.riu.challenge.hotel_availability_search.infrastructure.adapter.db.repository;
 
 import java.time.LocalDate;
 import java.util.List;

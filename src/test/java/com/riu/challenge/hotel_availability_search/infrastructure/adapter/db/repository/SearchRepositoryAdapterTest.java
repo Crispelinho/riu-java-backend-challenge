@@ -51,9 +51,7 @@ class SearchRepositoryAdapterTest {
 
     @Test
     void countEquivalentSearchesFiltersAges() {
-        SearchEntity entity = new SearchEntity();
-        entity.setAges(List.of(1,2));
-        when(searchRepository.findByHotelIdAndCheckInDateAndCheckOutDate(any(), any(), any())).thenReturn(List.of(entity));
+        when(searchRepository.countEquivalentSearchesDb(any(), any(), any(), any())).thenReturn(1L);
         long count = adapter.countEquivalentSearches("H1", LocalDate.now(), LocalDate.now(), List.of(1,2));
         assertEquals(1, count);
     }

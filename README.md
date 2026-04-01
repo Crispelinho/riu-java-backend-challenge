@@ -9,7 +9,6 @@ Proyecto Java Spring Boot para gestión y consulta de búsquedas de disponibilid
 
 ```
 hotel-availability-search/
-├── AGENT.md
 ├── build/
 ├── build.gradle
 ├── docker-compose.yml
