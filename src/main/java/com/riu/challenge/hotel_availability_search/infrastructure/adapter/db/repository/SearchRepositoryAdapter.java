@@ -35,11 +35,7 @@ public class SearchRepositoryAdapter implements SearchRepositoryPort {
       final LocalDate checkIn,
       final LocalDate checkOut,
       final List<Integer> ages) {
-    final List<SearchEntity> entities = searchRepository.findByHotelIdAndCheckInDateAndCheckOutDate(hotelId, checkIn,
-        checkOut);
-    return entities.stream()
-        .filter(e -> areAgesEqual(e.getAges(), ages))
-        .count();
+    return searchRepository.countEquivalentSearchesDb(hotelId, checkIn, checkOut, ages);
   }
 
   private boolean areAgesEqual(final List<Integer> dbAges, final List<Integer> requestAges) {

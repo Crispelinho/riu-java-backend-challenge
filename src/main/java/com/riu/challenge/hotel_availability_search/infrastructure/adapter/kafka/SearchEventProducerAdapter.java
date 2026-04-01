@@ -24,6 +24,10 @@ public class SearchEventProducerAdapter {
 
   public void publishSearchEvent(final CreateSearchEvent event) {
     logService.logInfo("SearchEventProducerAdapter", "Producing event to topic '" + topic + "': " + event);
-    kafkaTemplate.send(topic, event.getSearchId(), event);
+    kafkaTemplate.send(topic, event.getSearchId(), event)
+      .addCallback(
+        result -> logService.logInfo("SearchEventProducerAdapter", "Successfully published event to topic '" + topic + "': " + event),
+        ex -> logService.logError("SearchEventProducerAdapter", "Failed to publish event to topic '" + topic + "': " + event + ". Error: " + ex.getMessage())
+      );
   }
 }

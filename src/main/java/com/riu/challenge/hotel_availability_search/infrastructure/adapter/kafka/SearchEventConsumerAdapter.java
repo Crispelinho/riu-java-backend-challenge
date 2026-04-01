@@ -1,7 +1,6 @@
 package com.riu.challenge.hotel_availability_search.infrastructure.adapter.kafka;
 
 import com.riu.challenge.hotel_availability_search.domain.model.Search;
-import com.riu.challenge.hotel_availability_search.domain.model.SearchEventMapper;
 import com.riu.challenge.hotel_availability_search.domain.ports.SearchRepositoryPort;
 import com.riu.challenge.hotel_availability_search.infrastructure.adapter.kafka.event.CreateSearchEvent;
 

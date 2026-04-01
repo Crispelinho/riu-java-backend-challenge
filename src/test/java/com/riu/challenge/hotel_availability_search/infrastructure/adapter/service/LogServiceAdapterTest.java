@@ -10,31 +10,29 @@ class LogServiceAdapterTest {
     private final LogServicePort logService = new LogServiceAdapter();
 
     @Test
-    void logDebug_doesNotThrow() {
+    void logDebugDoesNotThrow() {
         assertDoesNotThrow(() -> logService.logDebug("debug message"));
     }
 
     @Test
-    void logInfo_doesNotThrow() {
+    void logInfoDoesNotThrow() {
         assertDoesNotThrow(() -> logService.logInfo("info message"));
     }
 
     @Test
-    void logWarn_doesNotThrow() {
+    void logWarnDoesNotThrow() {
         assertDoesNotThrow(() -> logService.logWarn("warn message"));
     }
 
     @Test
-    void logError_messageOnly_doesNotThrow() {
+    void logErrorMessageOnlyDoesNotThrow() {
         assertDoesNotThrow(() -> logService.logError("error message"));
     }
 
     @Test
-    void logError_withThrowable_throwsLogServiceExceptionAndEncapsulatesCause() {
+    void logErrorWithThrowableThrowsLogServiceExceptionAndEncapsulatesCause() {
         Exception original = new IllegalArgumentException("original");
-        LogServiceException thrown = assertThrows(LogServiceException.class, () -> {
-            logService.logError("error with cause", original);
-        });
+        LogServiceException thrown = assertThrows(LogServiceException.class, () -> logService.logError("error with cause", original));
         assertEquals("error with cause", thrown.getMessage());
         assertSame(original, thrown.getCause());
     }

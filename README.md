@@ -78,28 +78,35 @@ hotel-availability-search/
 
 ---
 
-## ¿Cómo ejecutar el proyecto?
 
-### 1. Construir el JAR
+## ¿Cómo levantar el proyecto?
 
+### 1. Requisitos
+- Docker y Docker Compose instalados
+
+### 2. Compilar el JAR
 ```sh
 ./gradlew clean build
 ```
 
-### 2. Levantar la app y Oracle con Docker Compose
-
+### 3. Levantar la app y Oracle con Docker Compose
 ```sh
 docker-compose up --build
 ```
-
 Esto levantará dos servicios:
 - **oracle-db**: Oracle XE 21c, usuario `system`, password `apppassword`, puerto 1521
 - **hotel-availability-app**: Spring Boot, puerto 8080
 
-### 3. Parar los servicios
+> **IMPORTANTE:** Si accedes a Kafka desde fuera del contenedor (por ejemplo, desde tu máquina local), debes cambiar la variable `SPRING_KAFKA_BOOTSTRAP_SERVERS` a `localhost:9092` en vez de `kafka:9092` en tu configuración local o en el archivo `docker-compose.yml`.
 
+### 4. Parar los servicios
 ```sh
 docker-compose down
+```
+
+### 5. Ver logs
+```sh
+docker-compose logs -f
 ```
 
 ---
@@ -110,27 +117,16 @@ docker-compose down
 - `SPRING_DATASOURCE_USERNAME=system`
 - `SPRING_DATASOURCE_PASSWORD=apppassword`
 
----
-
-## Documentación Swagger/OpenAPI
-
-Tras levantar la aplicación, puedes acceder a la documentación interactiva de la API en:
-
-- [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-
-Esto te permitirá explorar y probar los endpoints REST expuestos por el servicio.
+Puedes cambiar credenciales en `docker-compose.yml` si lo necesitas.
 
 ---
 
 ## Variables de entorno avanzadas
 
-Puedes personalizar el driver JDBC y la consola H2 usando variables de entorno:
-
 - `SPRING_DATASOURCE_DRIVER`: driver JDBC a usar (por defecto: `oracle.jdbc.OracleDriver`)
 - `SPRING_H2_CONSOLE_ENABLED`: habilita/deshabilita la consola H2 (`false` en producción, `true` en test)
 
 Ejemplo en Docker Compose (ya configurado):
-
 ```
 SPRING_DATASOURCE_DRIVER=oracle.jdbc.OracleDriver
 SPRING_H2_CONSOLE_ENABLED=false
@@ -140,56 +136,6 @@ Si ves errores de H2 en producción, asegúrate de que estas variables estén co
 
 ---
 
-## Notas
-
-- El contenedor de la app espera a que Oracle esté saludable antes de iniciar.
-- Puedes cambiar credenciales en `docker-compose.yml` si lo necesitas.
-- El JAR debe estar en `build/libs/` tras compilar.
-
----
-
-## Requisitos
-- Docker y Docker Compose instalados
-
-## Instrucciones rápidas
-
-### 1. Construir el JAR
-
-```sh
-./gradlew clean build
-```
-
-### 2. Levantar la app y Oracle con Docker Compose
-
-```sh
-docker-compose up --build
-```
-
-Esto levantará dos servicios:
-- **oracle-db**: Oracle XE 21c, usuario `system`, password `apppassword`, puerto 1521
-- **hotel-availability-app**: Spring Boot, puerto 8080
-
-### 3. Variables de conexión (ya configuradas)
-- `SPRING_DATASOURCE_URL=jdbc:oracle:thin:@oracle-db:1521/XE`
-- `SPRING_DATASOURCE_USERNAME=system`
-- `SPRING_DATASOURCE_PASSWORD=apppassword`
-
-### 4. Parar los servicios
-
-```sh
-docker-compose down
-```
-
----
-
-## Notas
-- El contenedor de la app espera a que Oracle esté saludable antes de iniciar.
-- Puedes cambiar credenciales en `docker-compose.yml` si lo necesitas.
-- El JAR debe estar en `build/libs/` tras compilar.
-
----
-
-
 ## Documentación Swagger/OpenAPI
 
 Tras levantar la aplicación, puedes acceder a la documentación interactiva de la API en:
@@ -197,29 +143,3 @@ Tras levantar la aplicación, puedes acceder a la documentación interactiva de 
 - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 Esto te permitirá explorar y probar los endpoints REST expuestos por el servicio.
-
----
-
-## Variables de entorno avanzadas
-
-Puedes personalizar el driver JDBC y la consola H2 usando variables de entorno:
-
-- `SPRING_DATASOURCE_DRIVER`: driver JDBC a usar (por defecto: `oracle.jdbc.OracleDriver`)
-- `SPRING_H2_CONSOLE_ENABLED`: habilita/deshabilita la consola H2 (`false` en producción, `true` en test)
-
-Ejemplo en Docker Compose (ya configurado):
-
-```
-SPRING_DATASOURCE_DRIVER=oracle.jdbc.OracleDriver
-SPRING_H2_CONSOLE_ENABLED=false
-```
-
-Si ves errores de H2 en producción, asegúrate de que estas variables estén correctamente definidas y que no haya variables heredadas de tu entorno local.
-
----
-
-¿Dudas? Revisa los logs con:
-
-```sh
-docker-compose logs -f
-```
